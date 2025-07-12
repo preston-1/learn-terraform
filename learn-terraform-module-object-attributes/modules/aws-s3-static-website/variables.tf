@@ -21,26 +21,30 @@ variable "tags" {
   default     = {}
 }
 
-variable "index_document_suffix" {
-  description = "Suffix for index documents."
-  type        = string
-  default     = "index.html"
-}
-
 variable "error_document_key" {
   description = "Key for error document."
   type        = string
   default     = "error.html"
 }
 
-variable "www_path" {
-  description = "Local absolute or relative path containing files to upload to website bucket."
-  type        = string
-  default     = null
+variable "files" {
+  description = "Configuration for website files."
+  type = object({
+    terraform_managed     = bool
+    error_document_key    = optional(string, "error.html")
+    index_document_suffix = optional(string, "index.html")
+    www_path              = optional(string)
+  })
 }
 
-variable "terraform_managed_files" {
-  description = "Flag to indicate whether Terraform should upload files to the bucket."
-  type        = bool
-  default     = true
+variable "cors_rules" {
+  description = "List of CORS rules."
+  type = list(object({
+    allowed_headers = optional(set(string)),
+    allowed_methods = set(string),
+    allowed_origins = set(string),
+    expose_headers  = optional(set(string)),
+    max_age_seconds = optional(number)
+  }))
+  default = []
 }
