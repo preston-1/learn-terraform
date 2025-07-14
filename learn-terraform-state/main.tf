@@ -38,9 +38,9 @@ resource "aws_security_group" "sg_8080" {
 # removed {
 #  from = aws_instance.example_new
 
-  # lifecycle {
-  #  destroy = false
-  # }
+# lifecycle {
+#  destroy = false
+# }
 # }
 
 resource "aws_instance" "example_new" {
